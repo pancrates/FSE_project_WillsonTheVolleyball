@@ -63,8 +63,8 @@ public class CompanyEmail {
         if (emailMessage == null) isComplete = false;
         return isComplete;
     }
-
-    public String toString() {
+    // BUG FIXED !!!!!! toString() -> isEmptyString();
+    public String isEmptyString() {
         if (subjectLine.equals("")) {
             return "[no subject]";
         } else {
