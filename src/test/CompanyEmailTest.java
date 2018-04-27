@@ -19,7 +19,7 @@ class CompanyEmailTest {
         ce = null;
     }
     @Test
-    @DisplayName("test_1_2_1 constructor without arguments")
+    @DisplayName("test_1_1_1 constructor without arguments")
     void test_1_1_1() throws IllegalAccessException, NoSuchFieldException {
         ce = new CompanyEmail();
         Field[] fields = ce.getClass().getDeclaredFields();
