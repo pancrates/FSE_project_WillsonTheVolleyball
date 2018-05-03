@@ -19,7 +19,6 @@ public class CompanyEmailSystem {
         //////////////
         //example test data
         //////////////
-
         CompanyProject cp1 = new CompanyProject("Proj1");
         CompanyProject cp2 = new CompanyProject("Proj2");
         CompanyProject cp3 = new CompanyProject("Proj3");

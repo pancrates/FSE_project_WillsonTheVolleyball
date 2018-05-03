@@ -13,66 +13,67 @@ import org.junit.jupiter.params.*;
 
 
 public class CompanyProjectTest {
-
     private CompanyProject project;
-    private ArrayList<String> testArrayS;
-    private ArrayList<CompanyEmail> testArrayC;
-    private CompanyEmail CompanyEmailObject;
     private CompanyEmailSystem ces;
-    private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
 
     @BeforeEach
-    void setUp() throws Exception {
+    public void setUp() throws Exception {
         ces = new CompanyEmailSystem();
         project = new CompanyProject();
 
     }
+
     @AfterEach
-    void tearDown(){
+    public void tearDown(){
         project = null;
         ces=null;
         ces.GlobalProjectCounter=0;
     }
 
-    @Test
-    @DisplayName("test_2_1_1 constructor increments global counter  + id set to global counter")
-    void test_2_1_1() throws IllegalAccessException, NoSuchFieldException {
+    //Authors Primoz-Zain 27/04/2018
+    @Test //Test 2.1.1 Check if globalcounter is incremented and PID is the new globalcounter
+    public void test_2_1_1() throws IllegalAccessException, NoSuchFieldException {
         assertEquals(1,ces.GlobalProjectCounter);
         System.out.println(ces.GlobalProjectCounter);
         Field fi = project.getClass().getDeclaredField("PID");
         fi.setAccessible(true);
         assertEquals(ces.GlobalProjectCounter,fi.get(project));
     }
-    @Test
-    @DisplayName("test_2_1_2 constructor corectly creates a projectContacts arrayList<String>")
-    void test_2_1_2() throws IllegalAccessException, NoSuchFieldException {
+
+    //Authors Primoz-Zain 27/04/2018
+    @Test //Test 2.1.2 Check if ProjectContacts is set to an ArrayList<String>
+    public void test_2_1_2() throws IllegalAccessException, NoSuchFieldException {
         Field fi = project.getClass().getDeclaredField("ProjectContacts");
         fi.setAccessible(true);
         System.out.println(fi.getGenericType().getTypeName());
         assertEquals("java.util.ArrayList<java.lang.String>",fi.getGenericType().getTypeName());
     }
-    @Test
-    @DisplayName("test_2_1_3 constructor corectly creates a projectContacts arrayList<String>")
-    void test_2_1_3() throws IllegalAccessException, NoSuchFieldException {
+
+    //Authors Primoz-Zain-Asad 28/04/2018
+    @Test //Test 2.1.3 Check if ProjectEmails is set to an ArrayList[] of type <CompanyEmail>
+    public void test_2_1_3() throws IllegalAccessException, NoSuchFieldException {
         Field fi = project.getClass().getDeclaredField("ProjectEmails");
         fi.setAccessible(true);
-        //System.out.println((fi.get(project)));
-
-        Class stringArrayClass = fi.getClass();
-        ArrayList[] aa = ((ArrayList[]) fi.get(project));
-        aa[1].add(new CompanyEmail());
-        System.out.println((ArrayList<CompanyEmail>) aa[1]);
-        //System.out.println(fi.get(project));
-        Class stringArrayComponentType = stringArrayClass.getComponentType();
-        //System.out.println(stringArrayComponentType);
-        //assertEquals("java.util.ArrayList<java.lang.String>",);
+        ArrayList[] array = ((ArrayList[]) fi.get(project));
+        array[1].add(new CompanyEmail());
+        assertEquals("CompanyEmail", array[1].get(0).getClass().getTypeName());
     }
 
+    //Authors Zain-Asad 28/04/2018
+    @Test //Test 2.1.4 Check if pTitle is set to "New Project"
+    public void test_2_1_4() throws IllegalArgumentException, IllegalAccessException, NoSuchFieldException, SecurityException {
+        Field fi = project.getClass().getDeclaredField("PTitle");
+        fi.setAccessible(true);
+        assertEquals("New Project", fi.get(project));
+        System.out.println(fi.get(project));
+    }
 
+    //Authors Zain-Asad 28/04/2018
+    @Test //Test 2.1.5 Check if ProjectPhase is set to 1
+    public void test_2_1_5() throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
+        Field fi = project.getClass().getDeclaredField("ProjectPhase");
+        fi.setAccessible(true);
+        assertEquals(1, fi.get(project));
+        System.out.println(fi.get(project));
+    }
 }
-/*
-ParameterizedType stringListType = (ParameterizedType) fi.getGenericType();
-        Class<?> stringListClass = (Class<?>) stringListType.getActualTypeArguments()[0];
-        System.out.println(stringListClass); // class java.lang.String.
-        //assertEquals(ces.GlobalProjectCounter,fi.get(project));
-*/
