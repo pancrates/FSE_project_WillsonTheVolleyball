@@ -116,7 +116,7 @@ public class CompanyEmailSystem {
         ArrayList<CompanyEmail> projectPhaseEmails = null;
         if (phaseToShow==0) {
             projectPhaseEmails = cp.getEmailsForPhase();
-        } else if (phaseToShow < cp.getPhaseByID()) {
+        } else if (phaseToShow == cp.getPhaseByID()) {
             projectPhaseEmails = cp.getEmailsForPhase(phaseToShow);
         } else {
             System.out.println("Error: Unknown Phase");
