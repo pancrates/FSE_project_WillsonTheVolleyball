@@ -98,7 +98,7 @@ class CompanyEmailTest {
         assertEquals(fi.get(ce),ce.subjectLine());
         System.out.println("Test 1.5.2 passed");
     }
-    //@Disabled //FOUND BUG
+
     @Test
     @DisplayName("test_1_6_1 emailMessage with valid field")
     void test_1_6_1() throws NoSuchFieldException, IllegalAccessException {
@@ -117,9 +117,9 @@ class CompanyEmailTest {
         assertEquals(fi.get(ce),ce.emailMessage());
         System.out.println("Test 1.6.2 passed");
     }
-    //@Disabled //FOUND BUG
+
     @ParameterizedTest
-    @ValueSource(strings = { "dianaKendrick@companyemail.com","diana@.com","mynameishamletandthistobeornototbe@gmail.com","keyboard",""  })
+    @ValueSource(strings = { "dianakendrick@companyemail.com","diana@com","mynameishamletandthistobeornototbe@gmail.com","keyboard",""  })
     void test_1_7(String s) throws InvocationTargetException, IllegalAccessException, NoSuchMethodException, NoSuchFieldException {
         Method m;
         String out;
@@ -132,7 +132,7 @@ class CompanyEmailTest {
         m = ce.getClass().getDeclaredMethod("setFrom",methodParameters);
         m.setAccessible(true);
         out = (String) m.invoke(ce, params);
-        if (isValidEmailAddress(s)&&(s.length()<=30)) {
+        if (isValidEmailAddress(s)&&(s.length()<40)) {
             assertEquals(s,fi.get(ce));
         }
         else{
@@ -140,9 +140,9 @@ class CompanyEmailTest {
         }
         System.out.println(fi.get(ce));
     }
-    //@Disabled //FOUND BUG
+
     @ParameterizedTest
-    @ValueSource(strings = { "dianaKendrick@companyemail.com","diana@.com","hetragedyofhamletprinceofdenmarkasciitextplacedinthepublicdomainbymobylexicaltools1992@gmail.com","keyboard","" })
+    @ValueSource(strings = { "dianakendrick@companyemail.com","diana@.com","hetragedyofhamletprinceofdenmarkasciitextplacedinthepublicdomainbymobylexicaltools1992@gmail.com","keyboard","" })
     void test_1_8(String s) throws InvocationTargetException, IllegalAccessException, NoSuchMethodException, NoSuchFieldException {
         Method m;
         String out;
@@ -155,7 +155,7 @@ class CompanyEmailTest {
         m = ce.getClass().getDeclaredMethod("setTo",methodParameters);
         m.setAccessible(true);
         out = (String) m.invoke(ce, params);
-        if (isValidEmailAddress(s)&&(s.length()<=30)) {
+        if (isValidEmailAddress(s)&&(s.length()<40)) {
                 assertEquals(s,fi.get(ce));
         }
         else{
@@ -260,7 +260,7 @@ class CompanyEmailTest {
     }
 
 public boolean isValidEmailAddress(String email) {
-    String ePattern = "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$";
+    String ePattern = "(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|\"(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b\\x5d-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])*\")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21-\\x5a\\x53-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)\\])";
     java.util.regex.Pattern p = java.util.regex.Pattern.compile(ePattern);
     java.util.regex.Matcher m = p.matcher(email);
     return m.matches();

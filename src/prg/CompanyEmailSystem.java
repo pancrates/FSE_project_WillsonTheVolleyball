@@ -7,7 +7,7 @@ public class CompanyEmailSystem {
 
     private static ArrayList<CompanyProject> AllProjects;
     private static int currentProjShowing;
-
+    //3.1
     public static void main(String[] args) {
 
         ///////
@@ -95,7 +95,7 @@ public class CompanyEmailSystem {
         in.close();
 
     }
-
+    //3.2
     private static void ListProjects(){
         for (int x = 0; x < AllProjects.size(); x++) {
             CompanyProject cp = AllProjects.get(x);
@@ -103,7 +103,7 @@ public class CompanyEmailSystem {
             System.out.println((x+1) + ") " + cp.toString() + " - " + emailCount + "emails");
         }
     }
-
+    //3.3
     private static void AddProject(Scanner in) {
         System.out.println("What is the title of the project?");
         in.nextLine(); // to remove read-in bug
@@ -111,7 +111,7 @@ public class CompanyEmailSystem {
         AllProjects.add(new CompanyProject(title));
         System.out.println("[Project added]");
     }
-
+    //3.4
     private static void ListEmails(int phaseToShow) {
         CompanyProject cp = AllProjects.get(currentProjShowing);
         ArrayList<CompanyEmail> projectPhaseEmails = null;
@@ -136,14 +136,14 @@ public class CompanyEmailSystem {
             }
         }
     }
-
+    //3.5
     private static void ListPhases() {
         CompanyProject cp = AllProjects.get(currentProjShowing);
         for (int x=0; x < cp.getPhaseByID(); x++ ) {
             System.out.println((x+1)+") "+cp.getPhaseByName()+" - "+cp.getEmailsForPhase(x).size()+" Emails");
         }
     }
-
+    //3.6
     private static void ListContacts() {
         CompanyProject cp = AllProjects.get(currentProjShowing);
         ArrayList<String> projectContacts = cp.getProjectContacts();
@@ -151,7 +151,7 @@ public class CompanyEmailSystem {
             System.out.println((x+1)+") "+projectContacts.get(x));
         }
     }
-
+    //3.7
     private static void AddEmail(Scanner in) {
         System.out.println("Which email address is it from?");
         in.nextLine(); //to remove read-in bug
@@ -167,7 +167,7 @@ public class CompanyEmailSystem {
         cp.addEmail(ce);
         System.out.println("[Email added to " + cp.toString() + "]");
     }
-
+    //3.8
     private static void ChangeProjectPhase() {
         CompanyProject cp = AllProjects.get(currentProjShowing);
         if (cp.nextPhase()) {
