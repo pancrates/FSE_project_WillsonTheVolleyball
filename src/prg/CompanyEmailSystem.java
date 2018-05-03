@@ -19,6 +19,7 @@ public class CompanyEmailSystem {
         //////////////
         //example test data
         //////////////
+
         CompanyProject cp1 = new CompanyProject("Proj1");
         CompanyProject cp2 = new CompanyProject("Proj2");
         CompanyProject cp3 = new CompanyProject("Proj3");
@@ -116,7 +117,7 @@ public class CompanyEmailSystem {
         ArrayList<CompanyEmail> projectPhaseEmails = null;
         if (phaseToShow==0) {
             projectPhaseEmails = cp.getEmailsForPhase();
-        } else if (phaseToShow == cp.getPhaseByID()) {
+        } else if (phaseToShow < cp.getPhaseByID()) {
             projectPhaseEmails = cp.getEmailsForPhase(phaseToShow);
         } else {
             System.out.println("Error: Unknown Phase");

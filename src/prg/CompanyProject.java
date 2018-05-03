@@ -9,7 +9,6 @@ public class CompanyProject {
 
     public CompanyProject() {
         CompanyEmailSystem.GlobalProjectCounter++;
-        System.out.println("NEW CP formed");
         PID = CompanyEmailSystem.GlobalProjectCounter;
         PTitle = "New Project";
         ProjectContacts = new ArrayList<String>();
@@ -19,7 +18,6 @@ public class CompanyProject {
 
     public CompanyProject(String pTitle) {
         CompanyEmailSystem.GlobalProjectCounter++;
-
         PID = CompanyEmailSystem.GlobalProjectCounter;
         PTitle = pTitle;
         ProjectContacts = new ArrayList<String>();

@@ -1,4 +1,3 @@
-
 public class CompanyEmail {
     private String fromAddress;
     private String toAddress;
@@ -63,7 +62,7 @@ public class CompanyEmail {
         if (emailMessage == null) isComplete = false;
         return isComplete;
     }
-    // BUG FIXED !!!!!! toString() -> isEmptyString();
+
     public String isEmptyString() {
         if (subjectLine.equals("")) {
             return "[no subject]";
