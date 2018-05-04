@@ -60,7 +60,6 @@ public class CompanyEmailSystem {
                         System.out.println("Goodbye!");
                         break;
                     }else if(!(s.matches("[0-9]+"))){
-                        System.err.println("THIS HAPPEND");
                         System.out.println("Command not recognised");
                     }else if (Integer.parseInt(s) != -1 ) {
                         currentProjShowing = Integer.parseInt(s)-1;
