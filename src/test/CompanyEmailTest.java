@@ -178,12 +178,7 @@ class CompanyEmailTest {
         m = ce.getClass().getDeclaredMethod("setSubject", String.class);
         m.setAccessible(true);
         out = (String) m.invoke(ce, params);
-        if (s.length()<=40) {
-            assertEquals(s,fi.get(ce));
-        }
-        else{
-            assertEquals(s,fi.get(ce));
-        }
+        assertEquals(s,fi.get(ce));
         System.out.println(fi.get(ce));
     }
 
