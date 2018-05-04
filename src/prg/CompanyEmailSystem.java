@@ -79,7 +79,9 @@ public class CompanyEmailSystem {
                         ChangeProjectPhase();
                     } else if (s.equals("X")) {
                         currentProjShowing = -1;
-                    } else if (Integer.parseInt(s) != -1 ) {
+                    }else if(!(s.matches("[0-9]+"))){
+                        System.out.println("Command not recognised");
+                    }else if (Integer.parseInt(s) != -1 ) {
                         ListEmails(Integer.parseInt(s));
                     } else {
                         System.out.println("Command not recognised");
