@@ -136,7 +136,7 @@ public class CompanyEmailSystemTest {
     System.setIn(in);
     ces.main(null);
     System.err.println(output.toString());
-    assertEquals(s,output.toString().substring(294, 135+299));
+    assertEquals(s,output.toString().substring(294, 434));
   }
   @Test
   @DisplayName("Test_3_1_10 - Test if the add email works on an open project (invalid input)")
@@ -146,7 +146,7 @@ public class CompanyEmailSystemTest {
     System.setIn(in);
     ces.main(null);
     System.err.println(output.toString());
-    assertEquals(s,output.toString().substring(294+104, 135+294+23));
+    assertEquals(s,output.toString().substring(398, 452));
   }
   @Test
   @DisplayName("Test_3_1_11 - Test if the add email actually adds the emails (not only prints right) (valid input)")
@@ -156,7 +156,7 @@ public class CompanyEmailSystemTest {
     System.setIn(in);
     ces.main(null);
     System.err.println(output.toString());
-    assertEquals(s,output.toString().substring(1059+28-18, 1059+83+47-19));
+    assertEquals(s,output.toString().substring(1069, 1170));
   }
   @Test
   @DisplayName("Test_3_1_12 - Test if the existing project phases are correctly printed")
@@ -166,7 +166,7 @@ public class CompanyEmailSystemTest {
     System.setIn(in);
     ces.main(null);
     System.err.println(output.toString());
-    assertEquals(s,output.toString().substring(294, 320-1));
+    assertEquals(s,output.toString().substring(294, 319));
   }
   @Test
   @DisplayName("Test_3_1_13 - Test if the selected project moves to the nex phase on N")
@@ -176,7 +176,7 @@ public class CompanyEmailSystemTest {
     System.setIn(in);
     ces.main(null);
     System.err.println(output.toString());
-    assertEquals(s,output.toString().substring(294, 294+30));
+    assertEquals(s,output.toString().substring(294, 324));
   }
   @Test
   @DisplayName("Test_3_1_14 - Select a project then press N twice to move the project Phase twice AND check whether its changed to that phase by displaying the projects.")
@@ -186,7 +186,7 @@ public class CompanyEmailSystemTest {
     System.setIn(in);
     ces.main(null);
     System.err.println(output.toString());
-    assertEquals(s,output.toString().substring(857, 104+857));
+    assertEquals(s,output.toString().substring(857, 961));
   }
   @Test
   @DisplayName("Test_3_1_15 - Select a project then move to the last phase AND press N again to see the error message")
@@ -196,7 +196,7 @@ public class CompanyEmailSystemTest {
     System.setIn(in);
     ces.main(null);
     System.err.println(output.toString());
-    assertEquals(s,output.toString().substring(1415, 1415+30));
+    assertEquals(s,output.toString().substring(1415, 1445));
   }
   @Test
   @DisplayName("Test_3_1_16 - Select a project then pass in 0 to show the list of emails of the current phase")
@@ -206,7 +206,7 @@ public class CompanyEmailSystemTest {
     System.setIn(in);
     ces.main(null);
     System.err.println(output.toString());
-    assertEquals(s,output.toString().substring(294, 523+5));
+    assertEquals(s,output.toString().substring(294, 528));
   }
   @Test
   @DisplayName("Test_3_1_17 - Select a project then go to a next phase TWICE, then press 0 to check the list of emails, which should be 0")
@@ -216,7 +216,7 @@ public class CompanyEmailSystemTest {
     System.setIn(in);
     ces.main(null);
     System.err.println(output.toString());
-    assertEquals(s,output.toString().substring(744, 744+88));
+    assertEquals(s,output.toString().substring(744, 832));
   }
   @Test
   @DisplayName("Test_3_1_18 - Select a project then go to the next phase THRICE, then add a valid email to it by using A then press 0 to show to emails of the phase")
@@ -226,7 +226,7 @@ public class CompanyEmailSystemTest {
     System.setIn(in);
     ces.main(null);
     System.err.println(output.toString());
-    assertEquals(s,output.toString().substring(1293, 1293+109));
+    assertEquals(s,output.toString().substring(1293, 1402));
   }
   @Test
   @DisplayName("Test_3_1_19 - Select a Project then increment its phase 4 times and input the actual phase ID to show its emails")
@@ -236,7 +236,7 @@ public class CompanyEmailSystemTest {
     System.setIn(in);
     ces.main(null);
     System.err.println(output.toString());
-    assertEquals(s,output.toString().substring(1191, 1191+84));
+    assertEquals(s,output.toString().substring(1191, 1275));
   }
   @Test
   @DisplayName("Test_3_1_20 - Select a Project and try to input a number of a Phase that Project is not yet in.")
@@ -246,7 +246,7 @@ public class CompanyEmailSystemTest {
     System.setIn(in);
     ces.main(null);
     System.err.println(output.toString());
-    assertEquals(s,output.toString().substring(294, 294+20));
+    assertEquals(s,output.toString().substring(294, 314));
   }
   @Test
   @DisplayName("Test_3_1_21 - Select a Project then go to 3rd phase phase, add an email to it. THEN press that phases number ID to show its emails")
@@ -256,7 +256,7 @@ public class CompanyEmailSystemTest {
     System.setIn(in);
     ces.main(null);
     System.err.println(output.toString());
-    assertEquals(s,output.toString().substring(1078, 1078+117));
+    assertEquals(s,output.toString().substring(1078, 1195));
   }
   @Test
   @DisplayName("Test_3_1_22 - Select project 1 and then press C to see the emails of that list")
@@ -276,7 +276,7 @@ public class CompanyEmailSystemTest {
     System.setIn(in);
     ces.main(null);
     System.err.println(output.toString());
-    assertEquals(s,output.toString().substring(294, 357-16));
+    assertEquals(s,output.toString().substring(294, 341));
   }
   @Test
   @DisplayName("Test_3_1_24 - Select Project 3 and then press C to see the emails of that list")
@@ -286,7 +286,7 @@ public class CompanyEmailSystemTest {
     System.setIn(in);
     ces.main(null);
     System.err.println(output.toString());
-    assertEquals(s,output.toString().substring(294, 357-16));
+    assertEquals(s,output.toString().substring(294, 341));
   }
   @Test
   @DisplayName("Test_3_1_25 - Select a project, add an email to it and then press C to see all the contacts")
@@ -296,7 +296,7 @@ public class CompanyEmailSystemTest {
     System.setIn(in);
     ces.main(null);
     System.err.println(output.toString());
-    assertEquals(s,output.toString().substring(620+5, 680+12));
+    assertEquals(s,output.toString().substring(625, 692));
   }
   @Test
   @DisplayName("Test_3_1_26 - Select a project then X to exit")
@@ -316,17 +316,17 @@ public class CompanyEmailSystemTest {
     System.setIn(in);
     ces.main(null);
     System.err.println(output.toString());
-    assertEquals(s,output.toString().substring(104, 104+22));
+    assertEquals(s,output.toString().substring(104, 126));
   }
   @Test
   @DisplayName("Test_3_1_28 - Select a project then input an invalid character")
   public void Test_3_1_28() throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchFieldException {
     String s = "Command not recognised";
-    final InputStream in = new ByteArrayInputStream("Z".getBytes());
+    final InputStream in = new ByteArrayInputStream("2\nI".getBytes());
     System.setIn(in);
     ces.main(null);
     System.err.println(output.toString());
-    assertEquals(s,output.toString().substring(104, 104+22));
+    assertEquals(s,output.toString().substring(294, 316));
   }
 
 
