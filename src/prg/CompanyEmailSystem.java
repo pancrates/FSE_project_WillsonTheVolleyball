@@ -15,11 +15,11 @@ public class CompanyEmailSystem {
         //////
         GlobalProjectCounter = 0;
         AllProjects = new ArrayList<CompanyProject>();
-
+        currentProjShowing=-1;
         //////////////
         //example test data
         //////////////
-
+        //The titles should be at least 10 characters long, but we decided not to change them and consider them as test data.
         CompanyProject cp1 = new CompanyProject("Proj1");
         CompanyProject cp2 = new CompanyProject("Proj2");
         CompanyProject cp3 = new CompanyProject("Proj3");
@@ -51,7 +51,7 @@ public class CompanyEmailSystem {
         while (in.hasNextLine()){
             String s = in.next();
             try{
-                if(currentProjShowing == 0) {
+                if(currentProjShowing == -1) {
                     if (s.equals("P")) {
                         ListProjects();
                     } else if (s.equals("A")) {
@@ -59,7 +59,10 @@ public class CompanyEmailSystem {
                     } else if (s.equals("X")) {
                         System.out.println("Goodbye!");
                         break;
-                    } else if (Integer.parseInt(s) != -1 ) {
+                    }else if(!(s.matches("[0-9]+"))){
+                        System.err.println("THIS HAPPEND");
+                        System.out.println("Command not recognised");
+                    }else if (Integer.parseInt(s) != -1 ) {
                         currentProjShowing = Integer.parseInt(s)-1;
                     } else {
                         System.out.println("Command not recognised");
@@ -76,7 +79,7 @@ public class CompanyEmailSystem {
                     } else if (s.equals("N")) {
                         ChangeProjectPhase();
                     } else if (s.equals("X")) {
-                        currentProjShowing = 0;
+                        currentProjShowing = -1;
                     } else if (Integer.parseInt(s) != -1 ) {
                         ListEmails(Integer.parseInt(s));
                     } else {
@@ -86,7 +89,7 @@ public class CompanyEmailSystem {
             } catch (Exception e) {
                 System.out.println("Something went wrong: " + e.toString() + "\n");
             }
-            if(currentProjShowing == 0) {
+            if(currentProjShowing == -1) {
                 System.out.println("What do you want to do?\n P = List [P]rojects, [num] = Open Project [num], A = [A]dd Project, X = E[x]it Software");
             } else {
                 System.out.println("What do you want to do?\n L = [L]ist Emails, A = [A]dd Email, F = List Phase [F]olders, N = Move to [N]ext Phase, [num] = List Emails in Phase [num], C = List [C]ontacts, X =  E[x]it Project");
@@ -100,7 +103,7 @@ public class CompanyEmailSystem {
         for (int x = 0; x < AllProjects.size(); x++) {
             CompanyProject cp = AllProjects.get(x);
             int emailCount = cp.getEmailsForPhase().size();
-            System.out.println((x+1) + ") " + cp.toString() + " - " + emailCount + "emails");
+            System.out.println((x+1) + ") " + cp.toString() + " - " + emailCount + " emails");
         }
     }
     //3.3
@@ -108,8 +111,12 @@ public class CompanyEmailSystem {
         System.out.println("What is the title of the project?");
         in.nextLine(); // to remove read-in bug
         String title = in.nextLine();
-        AllProjects.add(new CompanyProject(title));
-        System.out.println("[Project added]");
+        CompanyProject cp = new CompanyProject();
+        AllProjects.add(cp);
+        cp.setPTitle(title);
+        if(title.length()==0) System.out.println("[Project added]");
+        else if(title.length()<10) System.out.println("[The title is less than 10 characters long, default title was set.]");
+        else System.out.println("[Project added]");
     }
     //3.4
     private static void ListEmails(int phaseToShow) {
@@ -117,8 +124,8 @@ public class CompanyEmailSystem {
         ArrayList<CompanyEmail> projectPhaseEmails = null;
         if (phaseToShow==0) {
             projectPhaseEmails = cp.getEmailsForPhase();
-        } else if (phaseToShow < cp.getPhaseByID()) {
-            projectPhaseEmails = cp.getEmailsForPhase(phaseToShow);
+        } else if (phaseToShow-1 <= cp.getPhaseByID()) {
+            projectPhaseEmails = cp.getEmailsForPhase(phaseToShow-1);
         } else {
             System.out.println("Error: Unknown Phase");
         }
@@ -139,8 +146,8 @@ public class CompanyEmailSystem {
     //3.5
     private static void ListPhases() {
         CompanyProject cp = AllProjects.get(currentProjShowing);
-        for (int x=0; x < cp.getPhaseByID(); x++ ) {
-            System.out.println((x+1)+") "+cp.getPhaseByName()+" - "+cp.getEmailsForPhase(x).size()+" Emails");
+        for (int x=0; x <= cp.getPhaseByID(); x++ ) {
+            System.out.println((x+1)+") "+ProjectPhases[x]+" - "+cp.getEmailsForPhase(x).size()+" Emails");
         }
     }
     //3.6
@@ -153,19 +160,29 @@ public class CompanyEmailSystem {
     }
     //3.7
     private static void AddEmail(Scanner in) {
+        CompanyProject cp = AllProjects.get(currentProjShowing);
+        CompanyEmail ce = new CompanyEmail();
         System.out.println("Which email address is it from?");
         in.nextLine(); //to remove read-in bug
         String fromAddress = in.nextLine();
+        ce.setFrom(fromAddress);
         System.out.println("Which email address is it to?");
         String toAddress = in.nextLine();
+        ce.setTo(toAddress);
         System.out.println("What is the Subject?");
         String subjectLine = in.nextLine();
+        ce.setSubject(subjectLine);
         System.out.println("What is the Message?");
         String emailBody = in.nextLine();
-        CompanyProject cp = AllProjects.get(currentProjShowing);
-        CompanyEmail ce = new CompanyEmail(fromAddress,toAddress,subjectLine,emailBody);
-        cp.addEmail(ce);
-        System.out.println("[Email added to " + cp.toString() + "]");
+        ce.setMessage(emailBody);
+        if(ce.isValid()){
+            System.out.println("[Email added to " + cp.toString() + "]");
+            cp.addEmail(ce);
+        }
+        else {
+            System.out.println("[Email is not valid, not added to the current Project]");
+            return;
+        }
     }
     //3.8
     private static void ChangeProjectPhase() {

@@ -50,15 +50,15 @@ public class CompanyEmailSystemTest {
   @Test
   public void Test_3_1_2() throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchFieldException {
     String s =
-        "1) Proj1 [Design] - 4 emails\n" +
+        "1) Proj1 [Feasibility] - 4 emails\n" +
 
-        "2) Proj2 [Design] - 3 emails\n" +
+        "2) Proj2 [Feasibility] - 3 emails\n" +
 
-        "3) Proj3 [Design] - 3 emails";
+        "3) Proj3 [Feasibility] - 3 emails";
     final InputStream in = new ByteArrayInputStream("P\r\nX\r\n".getBytes());
     System.setIn(in);
     ces.main(null);
-    assertEquals(s,output.toString().substring(104, 187));
+    assertEquals(s,output.toString().substring(104, 205));
   }
   @Test
   public void Test_3_1_3() throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchFieldException {
@@ -79,7 +79,7 @@ public class CompanyEmailSystemTest {
     assertEquals(s,output.toString().substring(138, 205));
   }
   @Test
-  @DisplayName("Test_3_1_5 - INPUT={\"A\\r\\n\\r\\n\"} Test if project is added corectly if title is set to empty string")
+  @DisplayName("Test_3_1_5 - Test if project is added corectly if title is set to empty string")
   public void Test_3_1_5() throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchFieldException {
     String s = "[Project added]";
     final InputStream in = new ByteArrayInputStream("A\r\n\r\n".getBytes());
@@ -90,7 +90,7 @@ public class CompanyEmailSystemTest {
   }
 
   @Test
-  @DisplayName("Test_3_1_6 - INPUT={\"1\"} Test if the main enters the corect project menu")
+  @DisplayName("Test_3_1_6 - Test if the main enters the corect project menu")
   public void Test_3_1_6() throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchFieldException {
     String s = "What do you want to do?\n" +
         " L = [L]ist Emails, A = [A]dd Email, F = List Phase [F]olders, N = Move to [N]ext Phase, [num] = List Emails in Phase [num], C = List [C]ontacts, X =  E[x]it Project";
@@ -119,24 +119,24 @@ public class CompanyEmailSystemTest {
     assertEquals(s,output.toString().substring(104, 293));
   }
   @Test
-  @DisplayName("Test_3_1_8 - INPUT={\"1\\nL\"} Test if the opened project displays all emails for the current project phase")
+  @DisplayName("Test_3_1_8 - Test if the opened project displays all emails for the current project phase")
   public void Test_3_1_8() throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchFieldException {
-    String s = "Proj1 [Feasibility]\r\n\r\n From                Subject\r\n --------------------------------\r\n 1) me9@me.com - this is a test subject for email9\r\n 2) me6@me.com - this is a test subject for email6\r\n 3) me3@me.com - this is a test subject for email3\r\n 4) me0@me.com - this is a test subject for email0\r\n What do you want to do?\r\n L = [L]ist Emails, A = [A]dd Email, F = List Phase [F]olders, N = Move to [N]ext Phase, [num] = List Emails in Phase [num], C = List [C]ontacts, X =  E[x]it Project";
+    String s = "Proj1 [Feasibility]\n\n   From                Subject\n--------------------------------\n1) me9@me.com - this is a test subject for email9\n2) me6@me.com - this is a test subject for email6\n3) me3@me.com - this is a test subject for email3\n4) me0@me.com - this is a test subject for email0\nWhat do you want to do?\n L = [L]ist Emails, A = [A]dd Email, F = List Phase [F]olders, N = Move to [N]ext Phase, [num] = List Emails in Phase [num], C = List [C]ontacts, X =  E[x]it Project";
     final InputStream in = new ByteArrayInputStream("1\nL".getBytes());
     System.setIn(in);
     ces.main(null);
     System.err.println(output.toString());
-    assertEquals(s,output.toString().substring(0, output.toString().length()-1));
+    assertEquals(s,output.toString().substring(294, output.toString().length()-1));
   }
   @Test
   @DisplayName("Test_3_1_9 - Test if the add email works on an open project (valid input)")
   public void Test_3_1_9() throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchFieldException {
-    String s = "Which email address is it from?\nWhich email address is it to?\r\nWhat is the Subject?\r\nWhat is the Message?\r\n[Email added to Proj2 [Feasibility]]";
+    String s = "Which email address is it from?\nWhich email address is it to?\nWhat is the Subject?\nWhat is the Message?\n[Email added to Proj2 [Feasibility]]";
     final InputStream in = new ByteArrayInputStream("2\r\nA\nvalid@gmail.com\nvalid2@gmail.com2\nSubject\nBody4\nX\nX".getBytes());
     System.setIn(in);
     ces.main(null);
     System.err.println(output.toString());
-    assertEquals(s,output.toString().substring(294, 135+294));
+    assertEquals(s,output.toString().substring(294, 135+299));
   }
   @Test
   @DisplayName("Test_3_1_10 - Test if the add email works on an open project (invalid input)")
@@ -146,27 +146,27 @@ public class CompanyEmailSystemTest {
     System.setIn(in);
     ces.main(null);
     System.err.println(output.toString());
-    assertEquals(s,output.toString().substring(294, 135+294));
+    assertEquals(s,output.toString().substring(294+104, 135+294+23));
   }
   @Test
   @DisplayName("Test_3_1_11 - Test if the add email actually adds the emails (not only prints right) (valid input)")
   public void Test_3_1_11() throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchFieldException {
-    String s = "1) Proj1 [Feasibility] - 4 emails\r2) Proj2 [Feasibility] - 3 emails\r\n3) Proj3 [Feasibility] - 5 emails";
-    final InputStream in = new ByteArrayInputStream("3\rA\rvalid@gmail.com\rvalid2@gmail.com\rSubject\rBody\rA\rvalid3@gmail\rvalid4@gmail.com\rSubject2\rBody2\rX\rP".getBytes());
+    String s = "1) Proj1 [Feasibility] - 4 emails\n2) Proj2 [Feasibility] - 3 emails\n3) Proj3 [Feasibility] - 5 emails";
+    final InputStream in = new ByteArrayInputStream("3\rA\rvalid@gmail.com\rvalid2@gmail.com\rSubject\rBody\rA\rvalid3@gmail.com\rvalid4@gmail.com\rSubject2\rBody2\rX\rP".getBytes());
     System.setIn(in);
     ces.main(null);
     System.err.println(output.toString());
-    assertEquals(s,output.toString().substring(1059, 1059+83));
+    assertEquals(s,output.toString().substring(1059+28-18, 1059+83+47-19));
   }
   @Test
   @DisplayName("Test_3_1_12 - Test if the existing project phases are correctly printed")
   public void Test_3_1_12() throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchFieldException {
-    String s = "1) Feasibility - 3 Email";
+    String s = "1) Feasibility - 3 Emails";
     final InputStream in = new ByteArrayInputStream("2\nF\nX\nX".getBytes());
     System.setIn(in);
     ces.main(null);
     System.err.println(output.toString());
-    assertEquals(s,output.toString().substring(0, output.toString().length()-1));
+    assertEquals(s,output.toString().substring(294, 320-1));
   }
   @Test
   @DisplayName("Test_3_1_13 - Test if the selected project moves to the nex phase on N")
@@ -176,87 +176,87 @@ public class CompanyEmailSystemTest {
     System.setIn(in);
     ces.main(null);
     System.err.println(output.toString());
-    assertEquals(s,output.toString().substring(294, 294+38));
+    assertEquals(s,output.toString().substring(294, 294+30));
   }
   @Test
   @DisplayName("Test_3_1_14 - Select a project then press N twice to move the project Phase twice AND check whether its changed to that phase by displaying the projects.")
   public void Test_3_1_14() throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchFieldException {
-    String s = "1) Proj1 [Feasibility] - 4 emails\r\n2) Proj2 [Implementation] - 3 emails\r\n3) Proj3 [Feasibility] - 3 emails";
+    String s = "1) Proj1 [Feasibility] - 4 emails\n2) Proj2 [Implementation] - 0 emails\n3) Proj3 [Feasibility] - 3 emails";
     final InputStream in = new ByteArrayInputStream("2\nN\nN\nX\nP\nX\nX".getBytes());
     System.setIn(in);
     ces.main(null);
     System.err.println(output.toString());
-    assertEquals(s,output.toString().substring(0, output.toString().length()-1));
+    assertEquals(s,output.toString().substring(857, 104+857));
   }
   @Test
   @DisplayName("Test_3_1_15 - Select a project then move to the last phase AND press N again to see the error message")
   public void Test_3_1_15() throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchFieldException {
-    String s = "Project already in last phase.\r\n";
+    String s = "Project already in last phase.";
     final InputStream in = new ByteArrayInputStream("2\nN\nN\nN\nN\nN\nN\nX\nX".getBytes());
     System.setIn(in);
     ces.main(null);
     System.err.println(output.toString());
-    assertEquals(s,output.toString().substring(0, output.toString().length()-1));
+    assertEquals(s,output.toString().substring(1415, 1415+30));
   }
   @Test
   @DisplayName("Test_3_1_16 - Select a project then pass in 0 to show the list of emails of the current phase")
   public void Test_3_1_16() throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchFieldException {
-    String s = "Proj3 [Feasibility]\r\n\r\n   From                Subject\r\n--------------------------------\r\n1) me8@me.com - this is a test subject for email8\r\n2) me5@me.com - this is a test subject for email5\r\n3) me2@me.com - this is a test subject for email2";
+    String s = "Proj3 [Feasibility]\n\n   From                Subject\n--------------------------------\n1) me8@me.com - this is a test subject for email8\n2) me5@me.com - this is a test subject for email5\n3) me2@me.com - this is a test subject for email2";
     final InputStream in = new ByteArrayInputStream("3\n0\nX\nX".getBytes());
     System.setIn(in);
     ces.main(null);
     System.err.println(output.toString());
-    assertEquals(s,output.toString().substring(294, 523));
+    assertEquals(s,output.toString().substring(294, 523+5));
   }
   @Test
   @DisplayName("Test_3_1_17 - Select a project then go to a next phase TWICE, then press 0 to check the list of emails, which should be 0")
   public void Test_3_1_17() throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchFieldException {
-    String s = "Proj3 [Implementation]\r\n\r\n From                Subject\r\n--------------------------------\r\n";
-    final InputStream in = new ByteArrayInputStream("2\nN\nN\n0\nX\nX".getBytes());
+    String s = "Proj3 [Implementation]\n\n   From                Subject\n--------------------------------\n";
+    final InputStream in = new ByteArrayInputStream("3\nN\nN\n0\nX\nX".getBytes());
     System.setIn(in);
     ces.main(null);
     System.err.println(output.toString());
-    assertEquals(s,output.toString().substring(0, output.toString().length()-1));
+    assertEquals(s,output.toString().substring(744, 744+88));
   }
   @Test
   @DisplayName("Test_3_1_18 - Select a project then go to the next phase THRICE, then add a valid email to it by using A then press 0 to show to emails of the phase")
   public void Test_3_1_18() throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchFieldException {
-    String s = "Proj1 [Testing]\r\n\r\n   From                Subject\r\n--------------------------------\r\n valid2@gmail.com - Subject\r\n ";
+    String s = "Proj1 [Testing]\n\n   From                Subject\n--------------------------------\n1) valid@gmail.com - Subject";
     final InputStream in = new ByteArrayInputStream("1\nN\nN\nN\nA\nvalid@gmail.com\nvalid2@gmail.com\nSubject\nBody\n0\nX\nX".getBytes());
     System.setIn(in);
     ces.main(null);
     System.err.println(output.toString());
-    assertEquals(s,output.toString().substring(0, output.toString().length()-1));
+    assertEquals(s,output.toString().substring(1293, 1293+109));
   }
   @Test
   @DisplayName("Test_3_1_19 - Select a Project then increment its phase 4 times and input the actual phase ID to show its emails")
   public void Test_3_1_19() throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchFieldException {
-    String s = "Proj2 [Deployment]\r\n\r\n From                Subject\r\n--------------------------------\r\n";
+    String s = "Proj2 [Deployment]\n\n   From                Subject\n--------------------------------\n";
     final InputStream in = new ByteArrayInputStream("2\nN\nN\nN\nN\n5\nX\nX".getBytes());
     System.setIn(in);
     ces.main(null);
     System.err.println(output.toString());
-    assertEquals(s,output.toString().substring(0, output.toString().length()-1));
+    assertEquals(s,output.toString().substring(1191, 1191+84));
   }
   @Test
   @DisplayName("Test_3_1_20 - Select a Project and try to input a number of a Phase that Project is not yet in.")
   public void Test_3_1_20() throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchFieldException {
-    String s = "Error: Unknown Phase\r\n";
+    String s = "Error: Unknown Phase";
     final InputStream in = new ByteArrayInputStream("1\n5\nX\nX".getBytes());
     System.setIn(in);
     ces.main(null);
     System.err.println(output.toString());
-    assertEquals(s,output.toString().substring(0, output.toString().length()-1));
+    assertEquals(s,output.toString().substring(294, 294+20));
   }
   @Test
   @DisplayName("Test_3_1_21 - Select a Project then go to 3rd phase phase, add an email to it. THEN press that phases number ID to show its emails")
   public void Test_3_1_21() throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchFieldException {
-    String s = "Proj3 [Implementation]\r\n\r\n   From                Subject\r\n--------------------------------\r\n1) valid2@gmail.com - Subject\r\n";
+    String s = "Proj3 [Implementation]\n\n   From                Subject\n--------------------------------\n1) valid@gmail.com - Subject\n";
     final InputStream in = new ByteArrayInputStream("3\nN\nN\nA\nvalid@gmail.com\nvalid2@gmail.com\nSubject\nBody\n3\nX\nX".getBytes());
     System.setIn(in);
     ces.main(null);
     System.err.println(output.toString());
-    assertEquals(s,output.toString().substring(0, output.toString().length()-1));
+    assertEquals(s,output.toString().substring(1078, 1078+117));
   }
   @Test
   @DisplayName("Test_3_1_22 - Select project 1 and then press C to see the emails of that list")
@@ -266,7 +266,7 @@ public class CompanyEmailSystemTest {
     System.setIn(in);
     ces.main(null);
     System.err.println(output.toString());
-    assertEquals(s,output.toString().substring(0, output.toString().length()-1));
+    assertEquals(s,output.toString().substring(294, 357));
   }
   @Test
   @DisplayName("Test_3_1_23 - Select Project 2 and then press C to see the emails of that list")
@@ -276,27 +276,27 @@ public class CompanyEmailSystemTest {
     System.setIn(in);
     ces.main(null);
     System.err.println(output.toString());
-    assertEquals(s,output.toString().substring(0, output.toString().length()-1));
+    assertEquals(s,output.toString().substring(294, 357-16));
   }
   @Test
   @DisplayName("Test_3_1_24 - Select Project 3 and then press C to see the emails of that list")
   public void Test_3_1_24() throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchFieldException {
     String s = "1) you2@you.com\n2) you5@you.com\n3) you8@you.com";
-    final InputStream in = new ByteArrayInputStream("2\nC\nX\nX".getBytes());
+    final InputStream in = new ByteArrayInputStream("3\nC\nX\nX".getBytes());
     System.setIn(in);
     ces.main(null);
     System.err.println(output.toString());
-    assertEquals(s,output.toString().substring(0, output.toString().length()-1));
+    assertEquals(s,output.toString().substring(294, 357-16));
   }
   @Test
   @DisplayName("Test_3_1_25 - Select a project, add an email to it and then press C to see all the contacts")
   public void Test_3_1_25() throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchFieldException {
-    String s = "1) you1@you.com\n2) you4@you.com\n3) you7@you.com\n4) valid@gmail.com";
+    String s = "1) you1@you.com\n2) you4@you.com\n3) you7@you.com\n4) valid2@gmail.com";
     final InputStream in = new ByteArrayInputStream("2\nA\nvalid@gmail.com\nvalid2@gmail.com\nSubject\nBody\nC\nX\nX".getBytes());
     System.setIn(in);
     ces.main(null);
     System.err.println(output.toString());
-    assertEquals(s,output.toString().substring(620, 680));
+    assertEquals(s,output.toString().substring(620+5, 680+12));
   }
   @Test
   @DisplayName("Test_3_1_26 - Select a project then X to exit")
@@ -316,7 +316,7 @@ public class CompanyEmailSystemTest {
     System.setIn(in);
     ces.main(null);
     System.err.println(output.toString());
-    assertEquals(s,output.toString().substring(294, output.toString().length()-1));
+    assertEquals(s,output.toString().substring(104, 104+22));
   }
   @Test
   @DisplayName("Test_3_1_28 - Select a project then input an invalid character")
@@ -326,7 +326,7 @@ public class CompanyEmailSystemTest {
     System.setIn(in);
     ces.main(null);
     System.err.println(output.toString());
-    assertEquals(s,output.toString().substring(294, output.toString().length()-1));
+    assertEquals(s,output.toString().substring(104, 104+22));
   }
 
 

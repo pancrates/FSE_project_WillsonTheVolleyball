@@ -35,7 +35,7 @@ public class CompanyProject {
     }
     //2.5
     public void setPTitle(String pTitle) {
-        if (pTitle.length() >= 10 ) {
+        if ((pTitle.length() >= 10)||(pTitle.length()==0 ) ) {
             PTitle = pTitle;
         }
     }
@@ -62,10 +62,10 @@ public class CompanyProject {
     public void addEmail(CompanyEmail newEmail) {
         if (newEmail.isValid()) {
             ProjectEmails[ProjectPhase].add(newEmail);
-            if (ProjectContacts.contains(newEmail.fromAddress())) {
+            if (ProjectContacts.contains(newEmail.toAddress())) {
                 //do nothing
             } else {
-                ProjectContacts.add(newEmail.fromAddress());
+                ProjectContacts.add(newEmail.toAddress());
             }
         }
     }
@@ -79,11 +79,12 @@ public class CompanyProject {
     }
     //2.11
     public boolean nextPhase() {
-        ProjectPhase++;
-        if (ProjectPhase > CompanyEmailSystem.ProjectPhases.length) {
+        if (ProjectPhase >= CompanyEmailSystem.ProjectPhases.length-1) {
             return false;
         } else {
-            return true;
+          ProjectPhase++;
+          ProjectEmails[ProjectPhase] = new ArrayList<CompanyEmail>();
+          return true;
         }
     }
     //2.12
